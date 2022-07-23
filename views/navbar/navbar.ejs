@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"> PNR</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/PNR">Pnr Status/Cancellation</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/AllTickets">Booked Tickets </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/checkavailable">Cheack Availability </a>
+        </li>
+      </ul>
+      <%if(user){%>
+      <a href="/logout" class="btn btn-primary float-end m-1">Logout</a>
+      <%if(user.isAdmin){%>
+      <a href="/Admin" class="btn btn-danger float-end m-1">Admin</a>
+      <%}%> <%}else{%>
+      <a href="/Login" class="btn btn-primary float-end m-1">Login</a>
+      <%}%>
+    </div>
+  </div>
+</nav>

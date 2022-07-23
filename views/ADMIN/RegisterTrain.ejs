@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.0-beta1 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <%-include("../navbar/navbar")%>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="/TrainList">Train List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/registerTrain">Register Train</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Admin">PNR List</a>
+      </li>
+    </ul>
+
+    <div class="d-flex justify-content-center align-items-center">
+      <form class="p-2" method="post" action="/registerTrain">
+        <div class="mb-3">
+          <label for="trainEngine" class="form-label">Train Engine</label>
+          <select
+            class="form-select"
+            id="trainEngine"
+            name="trainName"
+            aria-label="Default select example"
+          >
+            <option selected>Open this select menu</option>
+            <% trainName.forEach(train => { %> <%if(train.available){%>
+            <option value="<%=train.name%>"><%=train.name%></option>
+            <%}%> <% })%>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="quantity" class="form-label w-100">Bogies Quantity</label>
+          <div class="d-flex">
+            <input
+              id="quantity"
+              class="form-control w-70"
+              type="range"
+              name="Bogies"
+              min="1"
+              max="<%=BogiesQuantity.available%>"
+              value="0"
+              onchange="updateTextInput(this.value);"
+            />
+            <input
+              type="text"
+              class="form-control w-25"
+              id="textInput"
+              min="0"
+              max="1000"
+              onchange="updaterangeInput(this.value);"
+              value="0"
+            />
+            <input
+              type="text"
+              class="form-control w-25"
+              id="AvailableBoogies"
+              min="0"
+              max="1000"
+              value="<%=BogiesQuantity.available%>"
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="Motorman" class="form-label">Assign Motorman</label>
+
+          <select
+            class="form-select"
+            id="Motorman"
+            name="Motorman"
+            aria-label="Default select example"
+          >
+            <option selected>Open this select menu</option>
+            <%Motormans.forEach((Moterman)=>{%> <%if(Moterman.available){%>
+            <option value="<%=Moterman.name%>"><%=Moterman.name%></option>
+            <%}%> <%})%>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="Assistant" class="form-label"> Assign Assistant</label>
+          <select
+            class="form-select"
+            id="Assistant"
+            name="Assistant"
+            aria-label="Default select example"
+          >
+            <option selected>Open this select menu</option>
+            <%Assistant.forEach((assistant)=>{%> <%if(assistant.available){%>
+            <option value="<%=assistant.name%>"><%=assistant.name%></option>
+            <%}%> <%})%>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+      integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+      integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function updateTextInput(val) {
+        document.getElementById("textInput").value = val;
+        document.getElementById("AvailableBoogies").value = <%=BogiesQuantity.available%> - val;
+      }
+      function updaterangeInput(val) {
+        if (val > <%=BogiesQuantity.available%>) {
+          document.getElementById("textInput").value = <%=BogiesQuantity.available%>;
+          val = <%=BogiesQuantity.available%>;
+        } else if (val < 0) {
+          document.getElementById("textInput").value = 0;
+          val = 0;
+        }
+        document.getElementById("AvailableBoogies").value = <%=BogiesQuantity.available%> - val;
+        document.getElementById("quantity").value = val;
+      }
+    </script>
+  </body>
+</html>
